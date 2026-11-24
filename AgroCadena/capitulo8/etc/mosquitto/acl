@@ -1,0 +1,6 @@
+# Cada nodo solo puede escribir en su propio topico
+pattern write lab/refrigeradores/%u/temperatura
+
+# La API de la nube solo puede leer las temperaturas
+user api-nube
+topic read lab/refrigeradores/+/temperatura
