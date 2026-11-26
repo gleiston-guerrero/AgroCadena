@@ -1,0 +1,67 @@
+# Broker Mosquitto: solo MQTT sobre TLS (puerto 8883), expuesto como LoadBalancer de K3s
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+  namespace: agrocadena
+data:
+  mosquitto.conf: |
+    per_listener_settings true
+    listener 8883
+    protocol mqtt
+    tls_version tlsv1.3
+    cafile   /mosquitto/certs/ca.crt
+    certfile /mosquitto/certs/broker.crt
+    keyfile  /mosquitto/certs/broker.key
+    allow_anonymous false
+    password_file /mosquitto/passwd/passwd
+    acl_file      /mosquitto/config/acl
+    log_dest stdout
+  acl: |
+    user ug65
+    topic write agrocadena/lectura
+    topic write agrocadena/pre-alerta
+    topic read  lorawan/+/up
+    topic read  agrocadena/lectura
+    user backend
+    topic read agrocadena/lectura
+    topic read agrocadena/pre-alerta
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+  namespace: agrocadena
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: mosquitto }
+  template:
+    metadata:
+      labels: { app: mosquitto }
+    spec:
+      containers:
+        - name: mosquitto
+          image: eclipse-mosquitto:2
+          ports: [{ containerPort: 8883 }]
+          volumeMounts:
+            - { name: config, mountPath: /mosquitto/config }
+            - { name: certs, mountPath: /mosquitto/certs, readOnly: true }
+            - { name: passwd, mountPath: /mosquitto/passwd, readOnly: true }
+      volumes:
+        - name: config
+          configMap: { name: mosquitto-config }
+        - name: certs
+          secret: { secretName: mosquitto-certs }
+        - name: passwd
+          secret: { secretName: mosquitto-passwd, defaultMode: 0400 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+  namespace: agrocadena
+spec:
+  type: LoadBalancer
+  selector: { app: mosquitto }
+  ports: [{ port: 8883, targetPort: 8883 }]

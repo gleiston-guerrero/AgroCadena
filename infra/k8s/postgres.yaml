@@ -1,0 +1,44 @@
+# PostgreSQL 16 + TimescaleDB con almacenamiento persistente (local-path de K3s)
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: agrocadena
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels: { app: postgres }
+  template:
+    metadata:
+      labels: { app: postgres }
+    spec:
+      containers:
+        - name: postgres
+          image: timescale/timescaledb:latest-pg16
+          env:
+            - { name: POSTGRES_USER, value: agrocadena }
+            - { name: POSTGRES_DB, value: agrocadena }
+            - name: POSTGRES_PASSWORD
+              valueFrom: { secretKeyRef: { name: agrocadena-secretos, key: POSTGRES_PASSWORD } }
+            - { name: PGDATA, value: /var/lib/postgresql/data/pgdata }
+          ports: [{ containerPort: 5432 }]
+          readinessProbe:
+            exec: { command: ["pg_isready", "-U", "agrocadena"] }
+            initialDelaySeconds: 10
+          volumeMounts:
+            - { name: datos, mountPath: /var/lib/postgresql/data }
+  volumeClaimTemplates:
+    - metadata: { name: datos }
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources: { requests: { storage: 10Gi } }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: agrocadena
+spec:
+  selector: { app: postgres }
+  ports: [{ port: 5432, targetPort: 5432 }]

@@ -1,0 +1,21 @@
+# Ingress (Traefik viene incluido en K3s). TLS con el certificado del dominio
+# guardado en el secreto agrocadena-tls.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: agrocadena
+  namespace: agrocadena
+spec:
+  tls:
+    - hosts: [app.agrocadena.ec]
+      secretName: agrocadena-tls
+  rules:
+    - host: app.agrocadena.ec
+      http:
+        paths:
+          - path: /v1
+            pathType: Prefix
+            backend: { service: { name: backend, port: { number: 80 } } }
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: web, port: { number: 80 } } }

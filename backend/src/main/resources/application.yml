@@ -1,0 +1,53 @@
+# src/main/resources/application.yml
+# Union de los listados lst:agro2-appyml (cap. 2) y lst:agro9-actuator (cap. 9).
+# Las credenciales se leen de variables de entorno (ver .env.example en la raiz).
+spring:
+  application:
+    name: agrocadena-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/agrocadena}
+    username: ${DB_USER:agrocadena}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update            # crea/actualiza tablas desde @Entity
+    open-in-view: false
+
+mqtt:
+  enabled: ${MQTT_ENABLED:true}
+  broker: ${MQTT_BROKER:ssl://localhost:8883}
+  client-id: agrocadena-backend
+  topic-lectura: agrocadena/lectura
+  username: backend
+  password: ${MQTT_PASSWORD}
+  ca-file: ${MQTT_CA_FILE:}       # ruta al ca.crt del broker (infra/mosquitto/certs)
+
+agrocadena:
+  reintento-ms: 30000
+  jwt:
+    issuer: ${JWT_ISSUER:https://auth.agrocadena.ec}
+
+server:
+  port: 8080
+
+logging:
+  level:
+    ec.uteq.agrocadena: INFO
+
+# Observabilidad (cap. 9)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        agrocadena.alerta.latencia: true
+      slo:
+        agrocadena.alerta.latencia: 10s, 30s

@@ -1,0 +1,13 @@
+# infra/mosquitto/acl -- autorizacion por topico (cap. 8)
+# La pasarela UG65 publica lecturas y pre-alertas
+user ug65
+topic write agrocadena/lectura
+topic write agrocadena/pre-alerta
+# lorawan/+/up: lectura del servidor de red; escritura solo para el simulador
+topic readwrite lorawan/+/up
+topic read  agrocadena/lectura
+
+# El backend solo consume
+user backend
+topic read agrocadena/lectura
+topic read agrocadena/pre-alerta
