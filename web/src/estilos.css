@@ -1,5 +1,27 @@
-body { margin: 0; font-family: system-ui, sans-serif; background: #f4f6f8; color: #1f2933; }
-header { background: #1b7f6b; color: #fff; padding: 0.8rem 1.5rem; }
-main { padding: 1.5rem; display: grid; gap: 1.5rem; }
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-.panel { background: #fff; border-radius: 8px; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f4f6f8;
+  color: #1f2933;
+}
+header {
+  background: #1b7f6b;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+}
+main {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.panel {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}

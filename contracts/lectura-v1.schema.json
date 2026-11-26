@@ -1,18 +1,18 @@
 {
-	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://api.agrocadena.ec/contracts/lectura-v1.schema.json",
-	"title": "Lectura de telemetria AgroCadena",
-	"type": "object",
-	"required": ["dispositivo", "instante", "temperatura", "humedad"],
-	"properties": {
-		"dispositivo":  { "type": "string", "pattern": "^[A-F0-9]{16}$" },
-		"instante":     { "type": "string", "format": "date-time" },
-		"temperatura":  { "type": "number", "minimum": -30, "maximum": 70 },
-		"humedad":      { "type": "number", "minimum": 0,   "maximum": 100 },
-		"latitud":      { "type": "number", "minimum": -90, "maximum": 90 },
-		"longitud":     { "type": "number", "minimum": -180,"maximum": 180 },
-		"bateria_pct":  { "type": "integer","minimum": 0,   "maximum": 100 },
-		"rssi_dbm":     { "type": "integer" }
-	},
-	"additionalProperties": false
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.agrocadena.ec/contracts/lectura-v1.schema.json",
+  "title": "Lectura de telemetria AgroCadena",
+  "type": "object",
+  "required": ["dispositivo", "instante", "temperatura", "humedad"],
+  "properties": {
+    "dispositivo": { "type": "string", "pattern": "^[A-F0-9]{16}$" },
+    "instante": { "type": "string", "format": "date-time" },
+    "temperatura": { "type": "number", "minimum": -30, "maximum": 70 },
+    "humedad": { "type": "number", "minimum": 0, "maximum": 100 },
+    "latitud": { "type": "number", "minimum": -90, "maximum": 90 },
+    "longitud": { "type": "number", "minimum": -180, "maximum": 180 },
+    "bateria_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "rssi_dbm": { "type": "integer" }
+  },
+  "additionalProperties": false
 }

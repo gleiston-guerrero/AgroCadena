@@ -1,3 +1,4 @@
+// backend/src/main/java/ec/uteq/agrocadena/AgroCadenaApplication.java
 package ec.uteq.agrocadena;
 
 import org.springframework.boot.SpringApplication;
@@ -8,7 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class AgroCadenaApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(AgroCadenaApplication.class, args);
-	}
+
+  public static void main(String[] args) {
+    SpringApplication.run(AgroCadenaApplication.class, args);
+  }
 }

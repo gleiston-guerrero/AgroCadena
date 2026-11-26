@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# infra/mosquitto/generar-certs.sh
 # Genera una CA propia y el certificado del broker para desarrollo.
 # Uso (Git Bash en Windows, o Linux/macOS):  ./generar-certs.sh [nombre-host]
 set -euo pipefail

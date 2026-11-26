@@ -1,4 +1,4 @@
-# web/Dockerfile -- compila el cliente Vue y lo sirve con nginx
+# web/Dockerfile
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./

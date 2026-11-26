@@ -1,4 +1,4 @@
-# prometheus/reglas-agrocadena.yml
+# infra/prometheus/reglas-agrocadena.yml
 groups:
   - name: agrocadena-slo
     rules:

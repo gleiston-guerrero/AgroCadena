@@ -1,3 +1,4 @@
+# infra/k8s/postgres.yaml
 # PostgreSQL 16 + TimescaleDB con almacenamiento persistente (local-path de K3s)
 apiVersion: apps/v1
 kind: StatefulSet

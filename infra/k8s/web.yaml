@@ -1,3 +1,4 @@
+# infra/k8s/web.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

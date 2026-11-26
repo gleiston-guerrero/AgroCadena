@@ -1,4 +1,4 @@
-# backend/Dockerfile -- imagen multi-etapa (base: lst:agro9-docker)
+# backend/Dockerfile
 # Etapa 1: build con el Maven Wrapper incluido en el repositorio
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /src

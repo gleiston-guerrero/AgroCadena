@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# infra/ops/baja-dispositivo.sh
 # Uso: ./baja-dispositivo.sh EM300-TH-0042
 set -euo pipefail
 ID="$1"

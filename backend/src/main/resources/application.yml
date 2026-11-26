@@ -1,6 +1,4 @@
-# src/main/resources/application.yml
-# Union de los listados lst:agro2-appyml (cap. 2) y lst:agro9-actuator (cap. 9).
-# Las credenciales se leen de variables de entorno (ver .env.example en la raiz).
+# backend/src/main/resources/application.yml
 spring:
   application:
     name: agrocadena-backend
@@ -10,7 +8,7 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update            # crea/actualiza tablas desde @Entity
+      ddl-auto: update        # crea/actualiza tablas desde @Entity
     open-in-view: false
 
 mqtt:
@@ -20,21 +18,24 @@ mqtt:
   topic-lectura: agrocadena/lectura
   username: backend
   password: ${MQTT_PASSWORD}
-  ca-file: ${MQTT_CA_FILE:}       # ruta al ca.crt del broker (infra/mosquitto/certs)
-
-agrocadena:
-  reintento-ms: 30000
-  jwt:
-    issuer: ${JWT_ISSUER:https://auth.agrocadena.ec}
+  ca-file: ${MQTT_CA_FILE:}   # CA del broker (infra/mosquitto/certs/ca.crt)
 
 server:
   port: 8080
+  forward-headers-strategy: framework   # respeta X-Forwarded-Proto del Ingress
 
 logging:
   level:
     ec.uteq.agrocadena: INFO
 
-# Observabilidad (cap. 9)
+agrocadena:
+  reintento-ms: 30000          # cola de reintento (cap. 7)
+  alertas-ms: 5000             # despacho de alertas a la app movil
+  fcm:
+    credenciales: ${FCM_CREDENCIALES:}   # cuenta de servicio de Firebase
+  jwt:
+    issuer: ${JWT_ISSUER:https://auth.agrocadena.ec}   # perfil prod (cap. 8)
+
 management:
   endpoints:
     web:
@@ -44,6 +45,9 @@ management:
     health:
       probes:
         enabled: true
+      group:
+        readiness:
+          include: readinessState, db, mqtt   # base de datos y broker
   metrics:
     distribution:
       percentiles-histogram:

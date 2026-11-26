@@ -1,3 +1,4 @@
+// backend/src/main/java/ec/uteq/agrocadena/domain/Alerta.java
 package ec.uteq.agrocadena.domain;
 
 import jakarta.persistence.*;
@@ -8,26 +9,54 @@ import java.time.Instant;
 @Table(name = "alerta")
 public class Alerta {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-	@ManyToOne(optional = false) @JoinColumn(name = "dispositivo_id")
-	private Dispositivo dispositivo;
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "dispositivo_id")
+  private Dispositivo dispositivo;
 
-	@Column(nullable = false)
-	private Instant instante;
+  @Column(nullable = false)
+  private Instant instante;
 
-	@Column(nullable = false, length = 40)
-	private String tipo;
+  @Column(nullable = false, length = 40)
+  private String tipo;
 
-	@Column(length = 255)
-	private String detalle;
+  @Column(length = 255)
+  private String detalle;
 
-	public Alerta() { }
+  public Alerta() {}
 
-	public Long getId() { return id; }
-	public Dispositivo getDispositivo() { return dispositivo; }
-	public Instant getInstante() { return instante; }
-	public String getTipo() { return tipo; }
-	public String getDetalle() { return detalle; }
+  public Alerta(
+    Dispositivo dispositivo,
+    Instant instante,
+    String tipo,
+    String detalle
+  ) {
+    this.dispositivo = dispositivo;
+    this.instante = instante;
+    this.tipo = tipo;
+    this.detalle = detalle;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public Dispositivo getDispositivo() {
+    return dispositivo;
+  }
+
+  public Instant getInstante() {
+    return instante;
+  }
+
+  public String getTipo() {
+    return tipo;
+  }
+
+  public String getDetalle() {
+    return detalle;
+  }
 }

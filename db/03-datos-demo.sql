@@ -1,3 +1,4 @@
+-- db/03-datos-demo.sql
 -- Datos de demostracion: el contenedor CNT-007 del libro y sus dispositivos.
 -- Ejecutar despues de 02-funciones-y-triggers.sql.
 INSERT INTO contenedor (codigo, producto, temp_min, temp_max) VALUES

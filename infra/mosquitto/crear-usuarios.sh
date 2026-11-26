@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# infra/mosquitto/crear-usuarios.sh
 # Crea el archivo de contrasenas del broker (usuarios backend y ug65)
 # con las contrasenas definidas en ../.env (MQTT_PASSWORD y MQTT_PASSWORD_UG65).
 set -euo pipefail

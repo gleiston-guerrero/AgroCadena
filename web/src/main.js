@@ -1,3 +1,4 @@
+// web/src/main.js
 import { createApp } from "vue";
 import "leaflet/dist/leaflet.css";
 import "./estilos.css";
